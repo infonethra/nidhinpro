@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
+    <title>Random Word Generator</title>
 </head>
 <body>
-    <h1>Hello, Nidhin is Pro!</h1>
-    <p>This is a simple Flask web app running on EC2.</p>
+    <h1>Random Word Generator</h1>
+    <p>Click the button to generate a random word:</p>
+    
+    <!-- Button to trigger random word generation -->
+    <button onclick="window.location.reload();">Generate Word</button>
+    
+    <!-- Display the random word -->
+    {% if word %}
+        <h2>Generated Word: {{ word }}</h2>
+    {% else %}
+        <h2>No words found in the database.</h2>
+    {% endif %}
 </body>
 </html>

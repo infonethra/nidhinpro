@@ -1,13 +1,30 @@
+import sqlite3
+import random
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
-# Home route
+# Function to get a random word from the database
+def get_random_word():
+    # Connect to the SQLite database
+    conn = sqlite3.connect('words.db')
+    cursor = conn.cursor()
+
+    # Fetch all words from the database
+    cursor.execute('SELECT word FROM words')
+    words = cursor.fetchall()
+
+    # Close the connection
+    conn.close()
+
+    # Return a random word from the list of words
+    return random.choice(words)[0] if words else None
+
 @app.route('/')
-def home():
-    return render_template('index.html')  # Ensure you have an index.html in the templates folder
+def index():
+    # Get a random word
+    word = get_random_word()
+    return render_template('index.html', word=word)
 
-# Other routes can be added here as necessary
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)  # Listen on all IPs (0.0.0.0) and port 5000
+if __name__ == "__main__":
+    app.run(debug=True)
